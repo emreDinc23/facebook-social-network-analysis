@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Análise de redes complexas de amizades do Facebook</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class="card text-white border-0">
+
+      <div class="card-img-overlay --card-img-overlay-purple d-flex flex-column justify-content-between align-items-start p-5 four"></div>
+
+      <div class="card-img-overlay card-overlay-black hover-light d-flex flex-column justify-content-between align-items-start">
+        <div class="d-flex justify-content-between w-100 mb-3">
+          <div><span class="badge badge-warning3 mr-2"> Emre Dinç   </span> & <span class="badge badge-info"> Batuhan Eymen Çorlu</span></div>
+
+          <a href="javascript://">
+            <div class="myicoo"></div>
+          </a>
+        </div>
+        <div class="mb-4">
+
+          <div class="h3"><a class="text-white text-decoration-none" href="javascript://">Facebook Social Network Graph<br>Project</a></div>
+        </div>
+        <div id="currentDate" class="text-light"></div>
+
+        
+        
+      </div>
+    </div>
+    
+    <div id="graph"></div>
+    <p id="info">Emre Dinç - Batuhan Eymen Çorlu 205542011 - 205541043  graphi büyütmek ve küçültmek için <b>scroll</b> kullanin 
+    <a href="https://github.com/emreDinc23">@emreDinc23</a>
+    
+    Web sitemizi ziyaret edebilirsiniz <a href="http://dincemre.com.tr">dincemre</a>. <a class="btnnext"href="graph.html">next</a></p>
+    <input type="search" id="filter" placeholder="Aramak istediğiniz ismi girin" incremental>
+    
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="sigma.concat.js"></script>
+    <script src="sigma.parseJson.js"></script>
+    <script src="code.js"></script>
+  </body>
+</html>
+<script>
+  // JavaScript kullanarak tarihi al ve div içine yaz
+  const currentDateElement = document.getElementById('currentDate');
+
+  // Şu anki tarihi al
+  const currentDate = new Date();
+  
+  // Tarih formatını ayarla (Örnek: "January 14, 2023")
+  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  const formattedDate = currentDate.toLocaleDateString('tr-Tr', options);
+
+  // HTML içeriğini güncel tarihle doldur
+  currentDateElement.textContent = formattedDate;
+</script>
