@@ -110,7 +110,7 @@ $('#filter').on('search keydown change', function(event) {
   }, 300);
 });
 
-graph.parseJson('/data/facebook.json', function() {
+graph.parseJson('static/lib/data/facebook.json', function() {
   graph.iterEdges(function(e){
     e.size=Math.sqrt(e.weight);
   });

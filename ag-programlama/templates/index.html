@@ -58,9 +58,10 @@
 
 
   </style> 
-    <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="./lib/d3.min.js"></script>
-  <script src="./lib/d3-tip.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/lib/style.css">
+    <script src="static/lib/d3.min.js"></script>
+    <script src="static/lib/d3-tip.js"></script>
+
   
   <div class="card text-white border-0">
 
@@ -84,11 +85,31 @@
       
     </div>
   </div>
-
+   <div class="form-container">
+            <h2>Yeni Kullanıcı ve Arkadaşları</h2>
+            <form method="POST" action="/" >                
+                <label for="friend1">Arkadaş 1 ID:</label>
+                <input type="text" id="friend1" name="friend1"><br><br>
+                <label for="friend2">Arkadaş 2 ID:</label>
+                <input type="text" id="friend2" name="friend2"><br><br>
+                <input type="submit" value="Gönder">
+            </form>
+            {% if common_friends %}
+            <div class="result-container">
+                <h2>Ortak Arkadaşlar</h2>
+                <p><strong>Ortak Arkadaşlar:</strong></p>
+                <ul>
+                    {% for friend in common_friends %}
+                        <li>{{ friend }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+  </div>
   <p id="info">Emre Dinç - Batuhan Eymen Çorlu 205542011 - 205541043  graphi büyütmek ve küçültmek için <b>scroll</b> kullanin 
     <a href="https://github.com/emreDinc23">@emreDinc23</a>
-    Web sitemizi ziyaret edebilirsiniz <a href="http://dincemre.com.tr">dincemre</a>. <a class="btnnext"href="index.html">previous</a></p>
-   
+    Web sitemizi ziyaret edebilirsiniz <a href="http://dincemre.com.tr">dincemre</a>. <a class="btnnext"href="{{ url_for('previous') }}">Next</a></p>
+ 
   <script>
     var width = 1920,  //960x720, 640x480, or 528x528
         height = 800;
@@ -97,7 +118,7 @@
     var dataset = [];
     var links = [];
     var linkedByIndex = {};
-    d3.csv("./data/MyFBFriendsDataSet.csv", function(d) {        
+    d3.csv("static/lib/data/MyFBFriendsDataSet.csv", function(d) {        
         var friendList = d.friendList.split("/");
         var sourceIndex = +d.id - 1;
         linkedByIndex[sourceIndex + "," + sourceIndex] = 1; //-- linked to itself

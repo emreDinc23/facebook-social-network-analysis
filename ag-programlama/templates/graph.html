@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Análise de redes complexas de amizades do Facebook</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="static\lib\style.css">
   </head>
   <body>
     <div class="card text-white border-0">
@@ -33,13 +33,13 @@
     <p id="info">Emre Dinç - Batuhan Eymen Çorlu 205542011 - 205541043  graphi büyütmek ve küçültmek için <b>scroll</b> kullanin 
     <a href="https://github.com/emreDinc23">@emreDinc23</a>
     
-    Web sitemizi ziyaret edebilirsiniz <a href="http://dincemre.com.tr">dincemre</a>. <a class="btnnext"href="graph.html">next</a></p>
+    Web sitemizi ziyaret edebilirsiniz <a href="http://dincemre.com.tr">dincemre</a>. <a class="btnnext"href="{{ url_for('graph') }}">Previous</a></p>
     <input type="search" id="filter" placeholder="Aramak istediğiniz ismi girin" incremental>
     
-    <script src="jquery-1.9.1.min.js"></script>
-    <script src="sigma.concat.js"></script>
-    <script src="sigma.parseJson.js"></script>
-    <script src="code.js"></script>
+    <script src="static/lib/jquery-1.9.1.min.js"></script>
+    <script src="static/lib/sigma.concat.js"></script>
+    <script src="static/lib/sigma.parseJson.js"></script>
+    <script src="static/lib/code.js"></script>
   </body>
 </html>
 <script>
