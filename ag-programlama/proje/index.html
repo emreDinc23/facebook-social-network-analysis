@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesium Facebook Graph</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.87/Build/Cesium/Cesium.js"></script>
+    <style>
+        @import url('https://cesium.com/downloads/cesiumjs/releases/1.87/Build/Cesium/Widgets/widgets.css');
+        #cesiumContainer { width: 100%; height: 100vh; display: block; }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhOGM4ZTVjOC03ZGQxLTQ5N2MtYTExZi1hYmVmZDU5OTEwY2MiLCJpZCI6MjE2NDI2LCJpYXQiOjE3MTYxOTk3NDJ9.Jal3gH3-fxyY6-26TXLCKx5CbxD-N2N2bWrDSsXdVmw';
+        // Initialize Cesium Viewer
+        const viewer = new Cesium.Viewer('cesiumContainer');
+
+        // Variables to store entities and visibility states
+        const entities = {};
+        const edgeEntities = {};
+        let edgesVisible = false;
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Get the first 100 nodes
+                const nodes = data.nodes.slice(0, 50);
+                // Get edges that connect the first 100 nodes
+                const edges = data.edges.filter(edge => {
+                    return nodes.some(node => node.id === edge.source) && nodes.some(node => node.id === edge.target);
+                });
+
+                // Function to convert node positions to Cesium Cartesian3 coordinates
+                function toCartesian(x, y) {
+                    return Cesium.Cartesian3.fromDegrees(x, y);
+                }
+
+                // Create Cesium entities for each node
+                nodes.forEach(node => {
+                    const position = toCartesian(node.x, node.y);
+                    const entity = viewer.entities.add({
+                        id: node.id,
+                        name: node.label,
+                        position: position,
+                        point: {
+                            pixelSize: 7,
+                            color: Cesium.Color.fromCssColorString('#2ecc71'), // Green color
+                            outlineColor: Cesium.Color.WHITE,
+                            outlineWidth: 2,
+                        },
+                        label: {
+                            text: node.label,
+                            font: 'bold 14px Arial',
+                            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                            fillColor: Cesium.Color.WHITE,
+                            outlineColor: Cesium.Color.BLACK,
+                            outlineWidth: 2,
+                            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                            pixelOffset: new Cesium.Cartesian2(0, -20),
+                        },
+                    });
+
+                    // Store the entity
+                    entities[node.id] = entity;
+                });
+
+                // Create Cesium entities for each edge
+                edges.forEach(edge => {
+                    const sourceNode = nodes.find(node => node.id === edge.source);
+                    const targetNode = nodes.find(node => node.id === edge.target);
+
+                    if (sourceNode && targetNode) {
+                        const sourcePosition = toCartesian(sourceNode.x, sourceNode.y);
+                        const targetPosition = toCartesian(targetNode.x, targetNode.y);
+
+                        const edgeEntity = viewer.entities.add({
+                            polyline: {
+                                positions: [sourcePosition, targetPosition],
+                                width: 3,
+                                material: new Cesium.PolylineOutlineMaterialProperty({
+                                    color: Cesium.Color.RED,
+                                    outlineWidth: 1,
+                                    outlineColor: Cesium.Color.BLACK,
+                                }),
+                            },
+                            show: false, // Initially hide the edge
+                        });
+
+                        // Store the edge entity
+                        edgeEntities[`${edge.source}-${edge.target}`] = edgeEntity;
+                    }
+                });
+
+                // Function to toggle visibility of edges
+                function toggleEdgesVisibility(nodeId) {
+                    // Toggle visibility of edges connected to this node
+                    edges.forEach(edge => {
+                        if (edge.source === nodeId || edge.target === nodeId) {
+                            const edgeKey = `${edge.source}-${edge.target}`;
+                            if (edgeEntities[edgeKey]) {
+                                edgeEntities[edgeKey].show = !edgesVisible;
+                            }
+                        }
+                    });
+
+                    edgesVisible = !edgesVisible; // Toggle visibility state
+                }
+
+                // Handle click event using Cesium's event handling
+                viewer.screenSpaceEventHandler.setInputAction(function(click) {
+                    const pickedObject = viewer.scene.pick(click.position);
+                    if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id) && entities[pickedObject.id.id]) {
+                        const nodeId = pickedObject.id.id;
+                        toggleEdgesVisibility(nodeId);
+                    }
+                }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+                viewer.zoomTo(viewer.entities);
+            })
+            .catch(error => {
+                console.error('Error loading or parsing the JSON file:', error);
+            });
+    </script>
+
+</body>
+</html>
