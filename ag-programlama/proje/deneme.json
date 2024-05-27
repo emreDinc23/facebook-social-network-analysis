@@ -1,0 +1,35 @@
+{
+    "locales": {
+      "zh_TW": [
+        {"longitude": 96.291030, "latitude": 37.233163},
+        {"longitude": 104.376967, "latitude": 31.356677},
+        {"longitude":  108.41993547295938, "latitude": 34.01919299171375}
+      ],
+      "en_US": [
+        {"longitude": -77.0369, "latitude": 38.8951},
+        {"longitude": -77.0358, "latitude": 38.8961},
+        {"longitude": -77.0347, "latitude": 38.8971}
+      ],
+      "en_GB": [
+        {"longitude": -0.1276, "latitude": 51.5074},
+        {"longitude": -0.1285, "latitude": 51.5084},
+        {"longitude": -0.1294, "latitude": 51.5094}
+      ],
+      "ja_JP": [
+        {"longitude": 139.6917, "latitude": 35.6895},
+        {"longitude": 139.6906, "latitude": 35.6905},
+        {"longitude": 139.6895, "latitude": 35.6915}
+      ],
+      "de_DE": [
+        {"longitude": 13.4050, "latitude": 52.5200},
+        {"longitude": 13.4061, "latitude": 52.5210},
+        {"longitude": 13.4072, "latitude": 52.5220}
+      ],
+      "fr_FR": [
+        {"longitude": 2.3522, "latitude": 48.8566},
+        {"longitude": 2.3533, "latitude": 48.8576},
+        {"longitude": 2.3544, "latitude": 48.8586}
+      ]
+    }
+  }
+  
